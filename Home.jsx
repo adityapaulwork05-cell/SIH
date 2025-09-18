@@ -11,6 +11,30 @@ function StatCard({label, value}){
 }
 
 export default function Home(){
+  const [showPaymentOptions, setShowPaymentOptions] = useState(false);
+  const [showThanks, setShowThanks] = useState(false);
+  const [thanksName, setThanksName] = useState('');
+
+  function handlePledge(e){
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const amount = data.get('amount');
+    const name = (data.get('name')||'').toString().trim();
+    setThanksName(name || 'Supporter');
+    setShowThanks(true);
+    setShowPaymentOptions(false);
+    // reset form
+    e.currentTarget.reset();
+  }
+
+  function simulatePayment(provider){
+    // In a real app we'd invoke the payment SDK here. For demo, mark as paid and thank user.
+    setShowPaymentOptions(false);
+    setShowThanks(true);
+    setThanksName(prev => prev || provider + ' supporter');
+    alert(`Simulated payment via ${provider} — thank you! (demo)`);
+  }
+
   return (
     <>
       <section className="hero">
