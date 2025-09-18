@@ -233,7 +233,6 @@ export default function Play(){
       <header>
         <div className="container">
           <h1 className="title">Play: Games & Quizzes</h1>
-          <Tabs/>
           <div className="mt-10 flex justify-end"><a className="btn" href="/">Home</a></div>
         </div>
       </header>
