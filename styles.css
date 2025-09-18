@@ -99,6 +99,11 @@
 .payment-options .small{opacity:.9}
 .thanks-banner{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(40,200,120,.08)}
 
+/* Topic cards: per-topic background images */
+.topic-card{background-size:cover;background-position:center;border-radius:16px;min-height:140px;color:var(--fg);position:relative;padding:20px;display:flex;align-items:flex-end}
+.topic-card::before{content:'';position:absolute;inset:0;border-radius:16px;background:linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,.45));mix-blend-mode:normal;pointer-events:none}
+.topic-card > div{position:relative;z-index:2}
+
 /* Embedded article content (NASA) */
 .nasa-article .article-content{line-height:1.7}
 .nasa-article .article-content h2{margin:16px 0 10px}
