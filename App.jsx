@@ -8,6 +8,7 @@ import Impact from './Impact.jsx';
 import Dashboard from './Dashboard.jsx';
 import TeacherLogin from './TeacherLogin.jsx';
 import StudentLogin from './StudentLogin.jsx';
+import Feedback from './Feedback.jsx';
 
 export default function App(){
   return (
@@ -17,6 +18,7 @@ export default function App(){
         <Route path="/learn" element={<Learn/>} />
         <Route path="/play" element={<Play/>} />
         <Route path="/impact" element={<Impact/>} />
+        <Route path="/feedback" element={<Feedback/>} />
         <Route path="/dashboard" element={<Dashboard/>} />
         <Route path="/teacher-login" element={<TeacherLogin/>} />
         <Route path="/student-login" element={<StudentLogin/>} />
