@@ -1,2 +1,1 @@
-# SIH
-for sih project
+# eco.quest
