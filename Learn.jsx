@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import BIG_QUESTIONS from '../data/nasaBigQuestions.js';
+import BIG_QUESTIONS from './nasaBigQuestions.js';
 
 export default function Learn(){
   const [openSlug, setOpenSlug] = useState(null);
