@@ -93,6 +93,74 @@ export default function Home(){
           </div>
         </div>
       </section>
+
+      <section className="section" id="funding-sponsorship">
+        <div className="container">
+          <h2>Funding & Sponsorship</h2>
+          <p className="lead">Support projects that expand internet access for rural learners, plant trees, run community cleanups, and fund local sustainability campaigns.</p>
+
+          <div className="row grid-2 mt-16">
+            <div className="card donation-card">
+              <div className="fw-700">Fund Rural Internet Access</div>
+              <div className="small mt-6">Help connect schools and community centers so children can access learning resources online.</div>
+              <ul className="small mt-8">
+                <li>Install connectivity and hardware</li>
+                <li>Train local champions</li>
+                <li>Maintain service and provide offline resources</li>
+              </ul>
+              <div className="mt-12">
+                <form className="donation-form" onSubmit={(e)=>{e.preventDefault(); const data = new FormData(e.currentTarget); const amount = data.get('amount'); const name = data.get('name'); alert(`Thank you ${name || 'supporter'} — pledged $${amount || '0'} (demo). We will follow up with donation instructions.`); e.currentTarget.reset();}}>
+                  <label className="small" htmlFor="amount">Pledge amount (USD)</label>
+                  <select className="select mt-6" name="amount" id="amount" defaultValue="25">
+                    <option value="10">$10 — Basic materials</option>
+                    <option value="25">$25 — Connectivity credits</option>
+                    <option value="50">$50 — Devices & supplies</option>
+                    <option value="100">$100 — Sponsor a classroom</option>
+                    <option value="250">$250 — Community hub</option>
+                  </select>
+
+                  <input className="input mt-10" type="text" name="name" placeholder="Your name (optional)" />
+                  <input className="input mt-10" type="email" name="email" placeholder="Email (we'll follow up)" />
+                  <textarea className="input mt-10" name="message" placeholder="Message (optional)" rows="4" />
+
+                  <div className="mt-12 flex gap-8 wrap">
+                    <button className="btn primary" type="submit">Pledge Support</button>
+                    <a className="btn" href="/impact">Learn about funded projects</a>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div>
+              <div className="card">
+                <div className="fw-700">Sponsor a Tree‑Planting or Cleanup Campaign</div>
+                <div className="small mt-6">Partner with local schools and organizations to fund campaigns that remove waste, restore habitats, and engage students in stewardship.</div>
+                <div className="mt-10">
+                  <ul className="small">
+                    <li>Fund tree seedlings and planting events</li>
+                    <li>Sponsor local waste collection drives</li>
+                    <li>Support youth-led environmental projects</li>
+                  </ul>
+                </div>
+                <div className="mt-12">
+                  <a className="btn" href="/contact">Become a sponsor</a>
+                </div>
+              </div>
+
+              <div className="card mt-12">
+                <div className="fw-700">Corporate Partnerships & Grants</div>
+                <div className="small mt-6">We welcome long-term partners to scale programs across regions and measure impact.</div>
+                <div className="mt-12 flex gap-8 wrap">
+                  <a className="btn" href="/contact">Partner with us</a>
+                  <a className="btn ghost" href="/impact">View impact reports</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="small mt-12">All donations in this demo app are simulated. For production, integrate a payment provider (Stripe, PayPal) and legal donation flow.</div>
+        </div>
+      </section>
     </>
   );
 }
