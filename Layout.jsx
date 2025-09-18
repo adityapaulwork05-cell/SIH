@@ -12,6 +12,7 @@ export default function Layout({ children }){
             <NavLink to="/learn" className={({isActive})=> isActive ? 'active' : undefined}>Learn</NavLink>
             <NavLink to="/play" className={({isActive})=> isActive ? 'active' : undefined}>Play</NavLink>
             <NavLink to="/impact" className={({isActive})=> isActive ? 'active' : undefined}>Impact</NavLink>
+            <NavLink to="/feedback" className={({isActive})=> isActive ? 'active' : undefined}>Feedback</NavLink>
             <NavLink to="/dashboard" className={({isActive})=> isActive ? 'active' : undefined}>Dashboard</NavLink>
             <NavLink to="/teacher-login" className={({isActive})=> isActive ? 'active' : undefined}>Teacher Login</NavLink>
             <NavLink to="/student-login" className={({isActive})=> isActive ? 'active' : undefined}>Student Login</NavLink>
