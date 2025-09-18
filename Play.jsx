@@ -233,7 +233,7 @@ export default function Play(){
       <header>
         <div className="container">
           <h1 className="title">Play: Games & Quizzes</h1>
-          <div className="mt-10 flex justify-end"><a className="btn" href="/">Home</a></div>
+          <div className="mt-6 flex justify-end"><a className="btn" href="/">Home</a></div>
         </div>
       </header>
 
@@ -242,12 +242,12 @@ export default function Play(){
           <section className="section">
             <div className="container">
               <h2>Choose a game</h2>
-              <div className="row grid-2 mt-16">
+              <div className="row grid-2 mt-8">
                 {games.map(g => (
                   <div key={g.id} className="card">
                     <div className="fw-600">{g.label}</div>
                     <div className="small mt-6">{g.desc}</div>
-                    <div className="mt-12">
+                    <div className="mt-8">
                       <button className="btn primary" onClick={()=>setActiveGame(g.id)}>{`Play ${g.label}`}</button>
                     </div>
                   </div>
