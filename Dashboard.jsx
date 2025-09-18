@@ -22,10 +22,10 @@ export default function Dashboard(){
   const leaderboard = useMemo(()=> filteredStudents.map(s=>{
     const sc = scores[s.email] || { points:0, badges:[] };
     const trees = (photos||[]).filter(p=>{
-      // match uploader to student email or name (case-insensitive)
+      const email = (s.email||'').toString().toLowerCase();
+      if(p.uploaderEmail) return p.uploaderEmail.toString().toLowerCase()===email;
       const upl = (p.uploader||'').toString().toLowerCase();
       const name = (s.name||'').toString().toLowerCase();
-      const email = (s.email||'').toString().toLowerCase();
       return upl && (upl===email || upl===name || upl.includes(email) || upl.includes(name));
     }).length;
     return { id: s.email, name: s.name||s.email, points: sc.points||0, badges: (sc.badges||[]).map(id=>({id})), trees };
@@ -119,7 +119,9 @@ export default function Dashboard(){
               <tbody id="students-table-body">
                 {students.map(s=> {
                   const trees = (photos||[]).filter(p=>{
-                    const upl=(p.uploader||'').toString().toLowerCase(); const name=(s.name||'').toString().toLowerCase(); const email=(s.email||'').toString().toLowerCase();
+                    const email=(s.email||'').toString().toLowerCase();
+                    if(p.uploaderEmail) return p.uploaderEmail.toString().toLowerCase()===email;
+                    const upl=(p.uploader||'').toString().toLowerCase(); const name=(s.name||'').toString().toLowerCase();
                     return upl && (upl===email || upl===name || upl.includes(email) || upl.includes(name));
                   }).length;
                   return (<tr key={s.email}><td>{s.name||'—'}</td><td>{s.email||''}</td><td>{s.school||''}</td><td>{s.t? new Date(s.t).toLocaleString(): ''}</td><td>{trees}</td></tr>)
