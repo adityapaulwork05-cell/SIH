@@ -219,6 +219,15 @@ function DraggableRow({item, order, setOrder}){
 }
 
 export default function Play(){
+  const [activeGame, setActiveGame] = useState(null); // null shows buttons, otherwise shows selected game
+
+  const games = [
+    { id: 'quiz', label: 'Eco Quiz', desc: 'Short multiple-choice quizzes to test climate knowledge.' },
+    { id: 'waste', label: 'Waste Sorter', desc: 'Drag items into the correct bin: recycle, compost, landfill.' },
+    { id: 'energy', label: 'Energy Saver', desc: 'Toggle devices to reduce classroom energy use.' },
+    { id: 'transit', label: 'Transit Ranker', desc: 'Rank transport options by emissions.' },
+  ];
+
   return (
     <>
       <header>
@@ -228,11 +237,54 @@ export default function Play(){
           <div className="mt-10 flex justify-end"><a className="btn" href="/">Home</a></div>
         </div>
       </header>
+
       <main className="container">
-        <section id="quiz" className="panel section"><Quiz/></section>
-        <section id="waste" className="panel section"><WasteSorter/></section>
-        <section id="energy" className="panel section"><EnergySaver/></section>
-        <section id="transit" className="panel section"><TransitRanker/></section>
+        {!activeGame && (
+          <section className="section">
+            <div className="container">
+              <h2>Choose a game</h2>
+              <div className="row grid-2 mt-16">
+                {games.map(g => (
+                  <div key={g.id} className="card">
+                    <div className="fw-600">{g.label}</div>
+                    <div className="small mt-6">{g.desc}</div>
+                    <div className="mt-12">
+                      <button className="btn primary" onClick={()=>setActiveGame(g.id)}>{`Play ${g.label}`}</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {activeGame === 'quiz' && (
+          <section id="quiz" className="panel section">
+            <div className="mt-10"><button className="btn" onClick={()=>setActiveGame(null)}>Back to games</button></div>
+            <Quiz/>
+          </section>
+        )}
+
+        {activeGame === 'waste' && (
+          <section id="waste" className="panel section">
+            <div className="mt-10"><button className="btn" onClick={()=>setActiveGame(null)}>Back to games</button></div>
+            <WasteSorter/>
+          </section>
+        )}
+
+        {activeGame === 'energy' && (
+          <section id="energy" className="panel section">
+            <div className="mt-10"><button className="btn" onClick={()=>setActiveGame(null)}>Back to games</button></div>
+            <EnergySaver/>
+          </section>
+        )}
+
+        {activeGame === 'transit' && (
+          <section id="transit" className="panel section">
+            <div className="mt-10"><button className="btn" onClick={()=>setActiveGame(null)}>Back to games</button></div>
+            <TransitRanker/>
+          </section>
+        )}
       </main>
     </>
   );
