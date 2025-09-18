@@ -7,12 +7,14 @@ export default function Impact(){
   const [photos, setPhotos] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [uploaderName, setUploaderName] = useState('');
+  const [auth, setAuth] = useState(()=>{ try{ return JSON.parse(localStorage.getItem('eco_auth')||'{}'); }catch(e){return{}} });
 
   useEffect(()=>{
     try{
       const raw = localStorage.getItem(STORAGE_KEY) || '[]';
       setPhotos(JSON.parse(raw));
     }catch(e){ setPhotos([]); }
+    try{ const a = JSON.parse(localStorage.getItem('eco_auth')||'{}'); setAuth(a); if(a && a.name) setUploaderName(a.name); }catch(e){}
   },[]);
 
   function persist(next){
@@ -25,7 +27,7 @@ export default function Impact(){
     setUploading(true);
     const readers = Array.from(files).map((file, i)=> new Promise((res, rej)=>{
       const reader = new FileReader();
-      reader.onload = ()=> res({ id: Date.now()+i, data: reader.result, name: file.name, t: Date.now(), uploader: uploaderName || '' });
+      reader.onload = ()=> res({ id: Date.now()+i, data: reader.result, name: file.name, t: Date.now(), uploader: uploaderName || '', uploaderEmail: (auth && auth.email) ? auth.email : '' });
       reader.onerror = rej;
       reader.readAsDataURL(file);
     }));
