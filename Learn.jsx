@@ -1,9 +1,10 @@
 import React, { useMemo, useState } from 'react';
 import BIG_QUESTIONS from './nasaBigQuestions.js';
+import OTHER_SECTIONS from './nasaOtherSections.js';
 
 export default function Learn(){
   const [openSlug, setOpenSlug] = useState(null);
-  const current = useMemo(()=> BIG_QUESTIONS.find(a=>a.slug===openSlug)||null, [openSlug]);
+  const current = useMemo(()=> ([...BIG_QUESTIONS, ...OTHER_SECTIONS].find(a=>a.slug===openSlug)||null), [openSlug]);
 
   return (
     <section className="section">
@@ -24,6 +25,17 @@ export default function Learn(){
                 </button>
               ))}
             </div>
+
+            <h2 className="mt-12">More NASA Climate Kids topics</h2>
+            <div className="row grid-3 mt-12">
+              {OTHER_SECTIONS.map(item => (
+                <button key={item.slug} className="card card-link" onClick={()=>setOpenSlug(item.slug)}>
+                  <div className="fw-600">{item.title}</div>
+                  <div className="small mt-6">Explore: {item.byline}</div>
+                </button>
+              ))}
+            </div>
+
             <div className="small mt-10">Content © NASA Climate Kids. Images are loaded from nasa.gov.</div>
           </div>
         )}
