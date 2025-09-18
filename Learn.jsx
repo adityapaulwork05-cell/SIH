@@ -47,8 +47,7 @@ export default function Learn(){
             <div className="small mt-6">Source: <a href={current.sourceUrl} target="_blank" rel="noopener noreferrer">NASA Climate Kids</a></div>
             <div className="mt-12 article-content" dangerouslySetInnerHTML={{__html: current.contentHtml}} />
             <div className="mt-14 flex gap-8 wrap">
-              <button className="btn" onClick={()=>setOpenSlug(null)}>Back to Big Questions</button>
-              <a className="btn ghost" href={current.sourceUrl} target="_blank" rel="noopener noreferrer">Open original</a>
+              <button className="btn" onClick={()=>setOpenSlug(null)}>Back to topics</button>
             </div>
           </article>
         )}
