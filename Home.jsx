@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function StatCard({label, value}){
@@ -109,7 +109,7 @@ export default function Home(){
                 <li>Maintain service and provide offline resources</li>
               </ul>
               <div className="mt-12">
-                <form className="donation-form" onSubmit={(e)=>{e.preventDefault(); const data = new FormData(e.currentTarget); const amount = data.get('amount'); const name = data.get('name'); alert(`Thank you ${name || 'supporter'} — pledged $${amount || '0'} (demo). We will follow up with donation instructions.`); e.currentTarget.reset();}}>
+                <form className="donation-form" onSubmit={handlePledge}>
                   <label className="small" htmlFor="amount">Pledge amount (USD)</label>
                   <select className="select mt-6" name="amount" id="amount" defaultValue="25">
                     <option value="10">$10 — Basic materials</option>
@@ -125,9 +125,30 @@ export default function Home(){
 
                   <div className="mt-12 flex gap-8 wrap">
                     <button className="btn primary" type="submit">Pledge Support</button>
+                    <button type="button" className="btn" onClick={()=>setShowPaymentOptions(true)}>Payment Options</button>
                     <a className="btn" href="/impact">Learn about funded projects</a>
                   </div>
                 </form>
+
+                {showPaymentOptions && (
+                  <div className="card payment-options mt-12">
+                    <div className="fw-700">Payment Options (Demo)</div>
+                    <div className="small mt-6">Choose a simulated payment provider to complete your pledge.</div>
+                    <div className="mt-10 flex gap-8 wrap">
+                      <button className="btn primary" onClick={()=>{ simulatePayment('Stripe'); }}>Pay with Stripe</button>
+                      <button className="btn" onClick={()=>{ simulatePayment('PayPal'); }}>Pay with PayPal</button>
+                      <button className="btn ghost" onClick={()=>setShowPaymentOptions(false)}>Close</button>
+                    </div>
+                  </div>
+                )}
+
+                {showThanks && (
+                  <div className="card mt-12 thanks-banner">
+                    <div className="fw-700">Thank you{thanksName ? `, ${thanksName}` : ''}!</div>
+                    <div className="small mt-6">Your pledge has been received. We will follow up via email with next steps and payment instructions (demo).</div>
+                  </div>
+                )}
+
               </div>
             </div>
 
