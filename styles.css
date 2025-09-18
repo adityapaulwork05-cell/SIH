@@ -89,6 +89,13 @@
 .progress-fill{height:100%;background:linear-gradient(90deg,#12d06f,#18eb6a);width:0%}
 .item.grid-two input{margin-top:4px}
 
+/* Donation & Sponsorship styles */
+.funding-section .donation-card{padding:20px}
+.donation-form .input{width:100%;resize:vertical}
+.donation-card ul{margin:8px 0 0 18px}
+.donation-card textarea{min-height:80px}
+@media (max-width:900px){.donation-card{margin-bottom:16px}}
+
 /* Embedded article content (NASA) */
 .nasa-article .article-content{line-height:1.7}
 .nasa-article .article-content h2{margin:16px 0 10px}
