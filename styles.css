@@ -104,6 +104,12 @@
 .topic-card::before{content:'';position:absolute;inset:0;border-radius:16px;background:linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,.45));mix-blend-mode:normal;pointer-events:none}
 .topic-card > div{position:relative;z-index:2}
 
+/* Photo grid for Impact uploads */
+.photo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.photo-thumb{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:8px;display:flex;flex-direction:column;align-items:center}
+.photo-thumb img{max-width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:8px}
+@media (max-width:900px){.photo-grid{grid-template-columns:repeat(2,1fr)}}
+
 /* Embedded article content (NASA) */
 .nasa-article .article-content{line-height:1.7}
 .nasa-article .article-content h2{margin:16px 0 10px}
