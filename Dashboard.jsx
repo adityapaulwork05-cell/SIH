@@ -6,6 +6,7 @@ export default function Dashboard(){
   const [auth, setAuth] = useState(()=> loadJSON('eco_auth', {}));
   const [students, setStudents] = useState(()=> loadJSON('eco_students', []));
   const [scores, setScores] = useState(()=> loadJSON('eco_scores', {}));
+  const [photos, setPhotos] = useState(()=> loadJSON('eco_trees_photos', []));
 
   const school = auth.school || '';
   const badgesList = [
@@ -20,8 +21,15 @@ export default function Dashboard(){
   const filteredStudents = useMemo(()=> school? students.filter(s=>s.school===school) : students, [students, school]);
   const leaderboard = useMemo(()=> filteredStudents.map(s=>{
     const sc = scores[s.email] || { points:0, badges:[] };
-    return { id: s.email, name: s.name||s.email, points: sc.points||0, badges: (sc.badges||[]).map(id=>({id})) };
-  }).sort((a,b)=> (b.points||0)-(a.points||0)), [filteredStudents, scores]);
+    const trees = (photos||[]).filter(p=>{
+      const email = (s.email||'').toString().toLowerCase();
+      if(p.uploaderEmail) return p.uploaderEmail.toString().toLowerCase()===email;
+      const upl = (p.uploader||'').toString().toLowerCase();
+      const name = (s.name||'').toString().toLowerCase();
+      return upl && (upl===email || upl===name || upl.includes(email) || upl.includes(name));
+    }).length;
+    return { id: s.email, name: s.name||s.email, points: sc.points||0, badges: (sc.badges||[]).map(id=>({id})), trees };
+  }).sort((a,b)=> (b.points||0)-(a.points||0)), [filteredStudents, scores, photos]);
 
   const topTeamName = leaderboard[0]?.name || '—';
 
@@ -42,7 +50,7 @@ export default function Dashboard(){
     alert(`Badge awarded: ${(b?.icon?b.icon+' ':'')+(b?.name||badgeId)} to ${email}`);
   }
 
-  useEffect(()=>{ setAuth(loadJSON('eco_auth', {})); setStudents(loadJSON('eco_students', [])); setScores(loadJSON('eco_scores', {})); },[]);
+  useEffect(()=>{ setAuth(loadJSON('eco_auth', {})); setStudents(loadJSON('eco_students', [])); setScores(loadJSON('eco_scores', {})); setPhotos(loadJSON('eco_trees_photos', [])); },[]);
 
   const isStudent = (auth.role||'')==='student';
 
@@ -93,10 +101,10 @@ export default function Dashboard(){
 
           <div className="card" style={{overflow:'auto'}}>
             <table className="table">
-              <thead><tr><th>Rank</th><th>Student</th><th>Badges</th><th className="text-right">Points</th></tr></thead>
+              <thead><tr><th>Rank</th><th>Student</th><th>Badges</th><th>Trees</th><th className="text-right">Points</th></tr></thead>
               <tbody id="leaderboard-body">
                 {leaderboard.map((t,i)=> (
-                  <tr key={t.id}><td>#{i+1}</td><td>{t.name}</td><td>{t.badges?.length||0}</td><td className="text-right">{(t.points||0).toLocaleString()}</td></tr>
+                  <tr key={t.id}><td>#{i+1}</td><td>{t.name}</td><td>{t.badges?.length||0}</td><td>{t.trees||0}</td><td className="text-right">{(t.points||0).toLocaleString()}</td></tr>
                 ))}
               </tbody>
             </table>
@@ -107,9 +115,17 @@ export default function Dashboard(){
           <div className="card mt-16" id="students-card">
             <div className="small">Students (logins)</div>
             <table className="table">
-              <thead><tr><th>Name</th><th>Email</th><th>School</th><th>Last Login</th></tr></thead>
+              <thead><tr><th>Name</th><th>Email</th><th>School</th><th>Last Login</th><th>Trees</th></tr></thead>
               <tbody id="students-table-body">
-                {students.map(s=> <tr key={s.email}><td>{s.name||'—'}</td><td>{s.email||''}</td><td>{s.school||''}</td><td>{s.t? new Date(s.t).toLocaleString(): ''}</td></tr>)}
+                {students.map(s=> {
+                  const trees = (photos||[]).filter(p=>{
+                    const email=(s.email||'').toString().toLowerCase();
+                    if(p.uploaderEmail) return p.uploaderEmail.toString().toLowerCase()===email;
+                    const upl=(p.uploader||'').toString().toLowerCase(); const name=(s.name||'').toString().toLowerCase();
+                    return upl && (upl===email || upl===name || upl.includes(email) || upl.includes(name));
+                  }).length;
+                  return (<tr key={s.email}><td>{s.name||'—'}</td><td>{s.email||''}</td><td>{s.school||''}</td><td>{s.t? new Date(s.t).toLocaleString(): ''}</td><td>{trees}</td></tr>)
+                })}
               </tbody>
             </table>
           </div>

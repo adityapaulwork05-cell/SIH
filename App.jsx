@@ -1,13 +1,13 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout.jsx';
-import Home from './pages/Home.jsx';
-import Learn from './pages/Learn.jsx';
-import Play from './pages/Play.jsx';
-import Impact from './pages/Impact.jsx';
-import Dashboard from './pages/Dashboard.jsx';
-import TeacherLogin from './pages/TeacherLogin.jsx';
-import StudentLogin from './pages/StudentLogin.jsx';
+import Layout from './Layout.jsx';
+import Home from './Home.jsx';
+import Learn from './Learn.jsx';
+import Play from './Play.jsx';
+import Impact from './Impact.jsx';
+import Dashboard from './Dashboard.jsx';
+import TeacherLogin from './TeacherLogin.jsx';
+import StudentLogin from './StudentLogin.jsx';
 
 export default function App(){
   return (

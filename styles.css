@@ -89,6 +89,27 @@
 .progress-fill{height:100%;background:linear-gradient(90deg,#12d06f,#18eb6a);width:0%}
 .item.grid-two input{margin-top:4px}
 
+/* Donation & Sponsorship styles */
+.funding-section .donation-card{padding:20px}
+.donation-form .input{width:100%;resize:vertical}
+.donation-card ul{margin:8px 0 0 18px}
+.donation-card textarea{min-height:80px}
+@media (max-width:900px){.donation-card{margin-bottom:16px}}
+.payment-options .btn{min-width:140px}
+.payment-options .small{opacity:.9}
+.thanks-banner{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(40,200,120,.08)}
+
+/* Topic cards: per-topic background images */
+.topic-card{background-size:cover;background-position:center;border-radius:16px;min-height:140px;color:var(--fg);position:relative;padding:20px;display:flex;align-items:flex-end}
+.topic-card::before{content:'';position:absolute;inset:0;border-radius:16px;background:linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,.45));mix-blend-mode:normal;pointer-events:none}
+.topic-card > div{position:relative;z-index:2}
+
+/* Photo grid for Impact uploads */
+.photo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.photo-thumb{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:8px;display:flex;flex-direction:column;align-items:center}
+.photo-thumb img{max-width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:8px}
+@media (max-width:900px){.photo-grid{grid-template-columns:repeat(2,1fr)}}
+
 /* Embedded article content (NASA) */
 .nasa-article .article-content{line-height:1.7}
 .nasa-article .article-content h2{margin:16px 0 10px}

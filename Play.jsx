@@ -94,10 +94,10 @@ function WasteSorter(){
       </div>
       <div className="mt-14 flex justify-between items-center">
         <div className="small">Sorted: <span id="sorted-count">{sortedCount}</span>/<span id="total-count">{ALL_ITEMS.length}</span></div>
-        <div>
+        <div className="flex gap-8 items-center">
           <span className="small">Score: <span className="stat" id="waste-score">{score}</span></span>
-          <button className="btn primary ml-10" id="waste-finish" onClick={()=>alert(`Score: ${score}/${ALL_ITEMS.length}`)}>Finish</button>
-          <button className="btn ghost ml-6" id="waste-restart" onClick={()=>{ setRemaining(ALL_ITEMS.map(x=>({...x}))); setPlaced({ recycle:[], compost:[], landfill:[] }); }}>Restart</button>
+          <button className="btn primary" id="waste-finish" onClick={()=>alert(`Score: ${score}/${ALL_ITEMS.length}`)}>Finish</button>
+          <button className="btn ghost" id="waste-restart" onClick={()=>{ setRemaining(ALL_ITEMS.map(x=>({...x}))); setPlaced({ recycle:[], compost:[], landfill:[] }); }}>Restart</button>
         </div>
       </div>
     </>
@@ -158,7 +158,7 @@ function EnergySaver(){
           <div className="meter"><div id="energy-meter" className="meter-fill" style={{width: Math.max(0,Math.min(100,reduction))+'%'}}/></div>
           <div className="small mt-6">Baseline: <span id="energy-base" className="stat">{BASE}</span> W · Current: <span id="energy-current" className="stat">{cur}</span> W · Reduction: <span id="energy-pct" className="stat">{reduction}</span>%</div>
         </div>
-        <div className="mt-12 flex gap-8 wrap">
+        <div className="mt-12 flex gap-8 justify-end items-center">
           <button className="btn primary" id="energy-finish" onClick={()=>alert(`Reduction: ${reduction}% (${BASE-cur} W saved). Target: 30%.`)}>Finish</button>
           <button className="btn" id="energy-all-off" onClick={()=> setItems(prev=> prev.map(p=> ({...p, on:false})))}>Turn all off</button>
           <button className="btn ghost" id="energy-reset" onClick={()=> setItems(prev=> prev.map(p=> ({...p, on:true})))}>Reset</button>
@@ -197,9 +197,9 @@ function TransitRanker(){
       </div>
       <div className="mt-12 flex justify-between items-center">
         <div className="small">Correct in place: <span id="transit-score" className="stat">{correctPos}</span>/<span id="transit-total">{CORRECT.length}</span></div>
-        <div>
+        <div className="flex gap-8 items-center">
           <button className="btn primary" id="transit-check" onClick={()=>alert(`Correct positions: ${correctPos}/${CORRECT.length}`)}>Check order</button>
-          <button className="btn ml-6" id="transit-shuffle" onClick={()=> setOrder(CORRECT.map(x=>({...x})).sort(()=>Math.random()-0.5))}>Shuffle</button>
+          <button className="btn" id="transit-shuffle" onClick={()=> setOrder(CORRECT.map(x=>({...x})).sort(()=>Math.random()-0.5))}>Shuffle</button>
         </div>
       </div>
     </div>
@@ -219,20 +219,71 @@ function DraggableRow({item, order, setOrder}){
 }
 
 export default function Play(){
+  const [activeGame, setActiveGame] = useState(null); // null shows buttons, otherwise shows selected game
+
+  const games = [
+    { id: 'quiz', label: 'Eco Quiz', desc: 'Short multiple-choice quizzes to test climate knowledge.' },
+    { id: 'waste', label: 'Waste Sorter', desc: 'Drag items into the correct bin: recycle, compost, landfill.' },
+    { id: 'energy', label: 'Energy Saver', desc: 'Toggle devices to reduce classroom energy use.' },
+    { id: 'transit', label: 'Transit Ranker', desc: 'Rank transport options by emissions.' },
+  ];
+
   return (
     <>
       <header>
         <div className="container">
           <h1 className="title">Play: Games & Quizzes</h1>
-          <Tabs/>
-          <div className="mt-10 flex justify-end"><a className="btn" href="/">Home</a></div>
+          <div className="mt-6 flex justify-end"><a className="btn" href="/">Home</a></div>
         </div>
       </header>
+
       <main className="container">
-        <section id="quiz" className="panel section"><Quiz/></section>
-        <section id="waste" className="panel section"><WasteSorter/></section>
-        <section id="energy" className="panel section"><EnergySaver/></section>
-        <section id="transit" className="panel section"><TransitRanker/></section>
+        {!activeGame && (
+          <section className="section">
+            <div className="container">
+              <h2>Choose a game</h2>
+              <div className="row grid-2 mt-8">
+                {games.map(g => (
+                  <div key={g.id} className="card">
+                    <div className="fw-600">{g.label}</div>
+                    <div className="small mt-6">{g.desc}</div>
+                    <div className="mt-8">
+                      <button className="btn primary" onClick={()=>setActiveGame(g.id)}>{`Play ${g.label}`}</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {activeGame === 'quiz' && (
+          <section id="quiz" className="panel section">
+            <div className="mt-10"><button className="btn" onClick={()=>setActiveGame(null)}>Back to games</button></div>
+            <Quiz/>
+          </section>
+        )}
+
+        {activeGame === 'waste' && (
+          <section id="waste" className="panel section">
+            <div className="mt-10"><button className="btn" onClick={()=>setActiveGame(null)}>Back to games</button></div>
+            <WasteSorter/>
+          </section>
+        )}
+
+        {activeGame === 'energy' && (
+          <section id="energy" className="panel section">
+            <div className="mt-10"><button className="btn" onClick={()=>setActiveGame(null)}>Back to games</button></div>
+            <EnergySaver/>
+          </section>
+        )}
+
+        {activeGame === 'transit' && (
+          <section id="transit" className="panel section">
+            <div className="mt-10"><button className="btn" onClick={()=>setActiveGame(null)}>Back to games</button></div>
+            <TransitRanker/>
+          </section>
+        )}
       </main>
     </>
   );
