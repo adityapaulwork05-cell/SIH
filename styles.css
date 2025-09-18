@@ -95,6 +95,9 @@
 .donation-card ul{margin:8px 0 0 18px}
 .donation-card textarea{min-height:80px}
 @media (max-width:900px){.donation-card{margin-bottom:16px}}
+.payment-options .btn{min-width:140px}
+.payment-options .small{opacity:.9}
+.thanks-banner{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(40,200,120,.08)}
 
 /* Embedded article content (NASA) */
 .nasa-article .article-content{line-height:1.7}
